@@ -64,6 +64,8 @@ ssh deck@steamdeck or
 	
 and now you can run terminal shit or even reboot your deck without touching it
 
+More Imporantly: You can now add your steam deck to a FTP Client like Filezilla and use a nice GUI to send files over your network, which will make setting up emulation much easier.
+
 
 
 Okay
