@@ -66,6 +66,13 @@ and now you can run terminal shit or even reboot your deck without touching it
 
 More Imporantly: You can now add your steam deck to a FTP Client like Filezilla and use a nice GUI to send files over your network, which will make setting up emulation much easier.
 
+	Also, if you're worried about people / bots being able to remotely login to your steam deck (the deck not your steam account), then you can use this:
+
+	https://www.strongdm.com/blog/ssh-passwordless-login
+	and disable password authentication, so people can't login without your key
+
+	otherwise to disable the ssh server, run:
+	sudo systemctl disable --now sshd.service
 
 
 Okay
