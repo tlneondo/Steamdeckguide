@@ -220,3 +220,12 @@ https://decky.xyz/
 
 Decky lets you do fun stuff like theme your system, play game music in the background, record video without framerate loss, all sorts of stuff,
 But keep your steam deck on the stable channel when you do it.
+
+Modding Bethesda Games
+
+	Modding a bethesda game properly, with a full mod manager, LODgen, etc, involves learning more software than learning how to be a Linux sicko like me.
+	People are working on a new version of the nexus mod manager which will have linux support, they're also stuff like LAMP, and etc.
+
+	There are ways to get things working but many of the tools in my experience that you would use under windows to mod Todd's Games are buggy under wine alone, and become very hard to handle when you build the Todd Stack of 7 different tools to mod the games right.
+
+	Except for Morrowind, since it has a native engine replacement, and can load multiple mod directories by just adding them to a settings file
