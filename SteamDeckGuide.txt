@@ -149,6 +149,10 @@ ALWAYS CHECK PROTONDB FOR REPORTS https://www.protondb.com/app/12140?device=any
 IT WILL ALSO HAVE INFO FOR HOW TO GET THINGS RUNNING
 
 
+Of Note, I highly recomend against adding mod installers to steam, as steam will generate Wine Prefixes, for JUST that exe, and they will be hard to access.
+Much better to use a tool below like protontricks to run the installers inside whatever prefix steam generates.
+
+		If you absolutely must use steam in this way, make sure you add the installer exe, then change the EXE on the steam shortcut to whatever the shortcut you want would have been, don't just add another exe to steam, change the one you added.
 
 
 -
