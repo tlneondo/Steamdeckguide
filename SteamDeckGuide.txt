@@ -1,0 +1,185 @@
+Steam Deck Guide
+
+First thing, set a system password
+Open up Konsole (the command line)
+
+type:
+
+passwd
+
+and you can set a user admin password, you'll need this for other stuff
+The username is Deck, and the user folder is located at /home/Deck/
+
+Linux doesn't have C drive or anything, drives are mounted at folders within root (/)
+Valve has things set up so the only partition you have write access to is mounted at /home
+Your SD card if you have one is going to be mounted under /run/media , which is where modern linux tends to put "temporary" storage like USB flash drives
+
+
+As the system is read only, except for /home, Valve uses something called Flatpak, which lets you install programs without touching the core of the system.
+This is what you are using through the Discover store (though Discovery is buggy as fuck and the KDE Desktop team I think are fixing it)
+These Flatpaks are "sandboxed" so that they're secure and don't have write permssions to fuck other shit up on the system.
+
+
+All this is fairly well made, frankly most of the issues you'll have with the deck are STEAM BEING BUGGY AS FUCK AND NOT TELLING YOU WHATS BROKEN
+
+
+Now, for accessing things remotely
+
+Very important if you don't have a dock since trackpad typing sucks
+
+for remote desktop, you'll want anydesk
+
+you can install it in discover, or via terminal:
+
+flatpak install flathub com.anydesk.Anydesk
+
+Anydesk will have a code you can use on its desktop app and then you'll have remote desktop
+
+
+
+for instances where you have a black screen and the steam deck seems like its bricked
+or you just don't want to run a full remote desktop
+lets set up the ssh server
+
+Windows 10 should have ssh (Secure SHell) built in, but if not you can install cygwin on your windows pc
+
+on the deck run this:
+
+sudo systemctl enable --now sshd.service
+
+	sudo is "superuser do", think of it like the User account control prompt under windows
+
+	systemctl is a tool that controls background services
+	
+	enable --now just tells the system to start something now and on boot
+	
+	sshd.service is the ssh service
+	
+	
+
+now on your windows PC you can open your terminal or cygwin and type:
+
+ssh deck@steamdeck or
+	ssh deck@[steamdeckIP address or hostname]
+	
+and now you can run terminal shit or even reboot your deck without touching it
+
+
+
+Okay
+
+Now for actual cool shit
+
+Valve's Proton is:
+
+WINE (Wine Is Not an Emulator)
+This is the compatibility layer that lets Linux run Windows Programs
+
+	When You launch a steam windows game, Steam will generate a "Wine Prefix" (You can get punny and call it a bottle)
+	Which is basically a fake C: Drive with its own windows registry, Program files, etc.
+	These will be located in:
+	~/.local/share/Steam/steamapps/compatdata/
+	and each folder has the steam id number of the game being launched.
+	
+	any game launched under these "Prefixes" will also have the rest of the linux system mounted under a Z: drive
+
+
+
+
+DXVK - Some dude in 2017 really wanted to play 2B's game on linux
+So he wrote a whole DirectX11 driver in Vulkan
+
+Then Valve spent a bunch of money fixing up the Mesa (open source driver project) Vulkan driver for AMD cards, known as RADV.
+And it has a ton of features to make DXVK really really fast with minimal overhead.
+
+On top of that, if a game has a native OpenGL or Vulkan driver, its likely that it'll run faster under Linux than under windows.
+As its not actually having to convert anything.
+
+As of now (Mesa 21.3 i believe) it's able to compile shaders at the same time as under windows
+So Steam downloading shaders is purely for battery savings
+
+Other people stepped up to support DirectX9 & 12.
+There's one in progress for DX8, but Wine's WINED3D (which uses OpenGL instead of Vulkan) is more than sufficient for that.
+
+The Deck uses something called Gamescope to scale up game windows using any kind of filtering or scaling you want.
+It fakes a display with whatever specifications you want, which is how it changes refresh rate, and etc.
+Highly recomend putting games in windowed mode and letting gamescope stretch things as it wants, it'll make them more resilient to resoltion and refresh rate changes.
+
+
+
+HERE BE DRAGONS
+HOW TO GET GAMES THAT DON'T WORK TO WORK
+AND HOW TO INSTALL MODS AND NON STEAM GAMES
+
+
+
+GameDevs (mostly japanese devs that are still figuring out that PCs aren't just for Eroge VNs)
+Will use the default windows options for rendered cutscenes
+Which puts them in a propriety codec, which Valve can't ship
+Which means videos or audio don't work
+
+Valve will reencode videos and ship them with the precompiled shaders, but even that can have issues
+(I've played Persona 4 for hours and hours in Japanese only to get flashbanged by reencoded cutscene by valve where they only included the english dub)
+
+So. 
+
+You install ProtonGE (which is a fork of proton with fixes for other games and some stuff to get videos working)
+You install it using a tool called ProtonUPQt, which makes things easy.
+Then you set the game to use said proton version in the game properties.
+GE means Glorious Eggroll, the guy who puts it together.
+This is one of those things that's probably illegal for Valve to do but nobody cares about individual users.
+
+This should be the first thing you try if something doesn't work.
+
+IN GENERAL
+DO NOT TRUST VERIFIED / NON VERIFIED STATUS
+PEOPLE EITHER DON'T KNOW WHAT THEY'RE DOING
+OR THEY PLAY THE FIRST 10 MINUTES AND SEE SOMETHING WORKS AND CHECK It
+
+ALWAYS CHECK PROTONDB FOR REPORTS
+IT WILL ALSO HAVE INFO FOR HOW TO GET THINGS RUNNING
+
+
+
+
+-
+Stuff you should install by name in discovery or run in terminal (just copy and paste the command)
+We'll get to emulators after this, with Emudeck
+
+	ProtonUpQT (tool I mentioned above for 
+	flatpak install flathub net.davidotek.pupgui2
+
+	Heroic (Handles Epic, GOG, & Amazon, Managed Wine Prefixes, this shit is the best)
+	flatpak install flathub com.heroicgameslauncher.hgl
+
+	Bottles (Very easy to use Wine "Bottle" manager, lets you make a bottle and run EXEs inside of them, I used this for Silent Hill 2 Enhanced edition)
+	flatpak install flathub com.usebottles.bottles
+
+	Lutris (older Wine Prefix manager
+	flatpak install flathub net.lutris.Lutris
+
+
+	ProtonTricks (install flatseal below as well) 
+	(This will let you open an exe file, and choose what Steam Created Wine Prefix to run it under)
+	I've use this to install fanpatches for stuff like Thief and Max Payne.
+	**By Default, Wine prefixes is configured to not show hidden folders (.local, .steam, the period hides the folder)
+	You can use protontricks to changed this setting (WineCFG) on the prefix, then you'll be able to tell a fan patch installer to point to a folder like say:
+	/home/deck/.local/share/Steam/steamapps/common/ThiefGold, or etc.
+	
+	I don't know why Valve hides their folder, its a pain in the ass
+	
+	flatpak install flathub com.github.Matoking.protontricks
+
+Extra:
+Luxtorpeda (through ProtonupQT)
+This is a tool installed like ProtonGE that lets you use native source ports with stuff like boomershooters
+I use it to play DoomMods, with the qzdl mod loader, and GZDOOM.
+
+
+Proton Compatibility
+
+	Modding
+	
+	
+
+
