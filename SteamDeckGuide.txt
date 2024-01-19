@@ -136,7 +136,7 @@ DO NOT TRUST VERIFIED / NON VERIFIED STATUS
 PEOPLE EITHER DON'T KNOW WHAT THEY'RE DOING
 OR THEY PLAY THE FIRST 10 MINUTES AND SEE SOMETHING WORKS AND CHECK It
 
-ALWAYS CHECK PROTONDB FOR REPORTS
+ALWAYS CHECK PROTONDB FOR REPORTS https://www.protondb.com/app/12140?device=any
 IT WILL ALSO HAVE INFO FOR HOW TO GET THINGS RUNNING
 
 
@@ -176,10 +176,38 @@ This is a tool installed like ProtonGE that lets you use native source ports wit
 I use it to play DoomMods, with the qzdl mod loader, and GZDOOM.
 
 
-Proton Compatibility
+DLL injection mods:
 
-	Modding
+Linux is smart and doesn't load whatever you put in a folder.
+But this is also a pain in the ass for fixing buggy games.
+
+if you run a game that has a fan patch, like say, dark souls with dxfix, dsfix injects itselft by overrideing a .dll file
+You need to tell WINE to load the dll file manually
+
+So go to steam and put something like this in the Launch options:
+This is an example from max payne.
+WINEDLLOVERRIDES="d3d8=n,b" %command% -skipstartup
+
+WINEDLLOVERRIDES is saying to look for a file called d3d8.dll in the same folder as the exe, and use that
+
+%command% is what steam uses for launching the game
+
+-skipstartup is a max payne specific launch option that just skips an intro video (this is the same as launch options under windows)
+
 	
-	
+emulators
+
+https://www.emudeck.com/
+
+Yes, there is some retroarch stuff for some systems, but I think they stay away when advisable
+Even so,
+emudeck genuinely does so much work to make things simple
+Even if you don't use the included steam rom manager to add games directly to steam, the controller configurations and shortcuts added to the emulators themselves makes it a good starting point, as well as a reference point for making things work
 
 
+
+Steam Deck Plugins (watch out, some plugins can be buggy)
+https://decky.xyz/
+
+Decky lets you do fun stuff like theme your system, play game music in the background, record video without framerate loss, all sorts of stuff,
+But keep your steam deck on the stable channel when you do it.
